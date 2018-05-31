@@ -9,23 +9,57 @@
 import Cocoa
 import CorePlot
 
+/*func CheckPoint(x: Double) -> Bool{
+    var y : Double = asin(x) + x*x
+    
+    y = sqrt(1-x*x)
+    
+    if y <=
+    
+    return
+}*/
+
 
 // здесь типа точки, по которым будет строиться график
 func GenerateDataSamples() -> [Int : (Double, Double)] {
-    
-    // 8 - начало, -7 - конец, 10 - количество точек
+
     var samples = [Int : (Double, Double)]()
-    let delta = (2 - (-2))/(999.0 - 1)
+    
+    /*samples[0] = (-1.0, 0.0)
+    samples[1] = (0.0, 1.0)
+    samples[2] = (1.0, 0.0)
+    samples[3] = (0.0, -1.0)
+    samples[4] = (-1.0, 0.0)*/
+    
+    let delta = (1 - (-1))/(999.0 - 1)
+    
+    samples[0] = (-1.0, 0.0)
     
     for step in 1...999 {
         // это шаг
         //let x = Double(step)
-        let x : Double = -2 + delta * Double(step)
+        let x : Double = -1 + delta * Double(step)
         // это, собстна, сам график
-        let y : Double = asin(x) + x*x
+        let y = sqrt(1-x*x)
+        //let y : Double = asin(x) + x*x
         // это коллекция координат (х, у)
+        
         samples[step] = (x, y)
     }
+    
+    for step in 1...999 {
+        // это шаг
+        //let x = Double(step)
+        let x : Double = -1 + delta * Double(step)
+        // это, собстна, сам график
+        let y = sqrt(1-x*x)
+        //let y : Double = asin(x) + x*x
+        // это коллекция координат (х, у)
+        
+        samples[step+999] = (x, -y)
+    }
+    
+    samples[samples.count] = (-1.0, -0.0)
     
     return samples
 }
@@ -65,18 +99,26 @@ class ViewController: NSViewController {
         let y = axisSet.yAxis!
         
         // устанавливаем тип линии осей
-        let lineStyle = CPTMutableLineStyle()
-        lineStyle.lineWidth = 1
-        lineStyle.lineColor = CPTColor.red()
+        let axisStyle = CPTMutableLineStyle()
+        axisStyle.lineWidth = 1
+        axisStyle.lineColor = CPTColor.black()
         
         // присваиваем осям стиль линий
-        x.axisLineStyle = lineStyle
-        y.axisLineStyle = lineStyle
+        x.axisLineStyle = axisStyle
+        y.axisLineStyle = axisStyle
+        
+        // стиль отображаемого графика
+        let graphStyle = CPTMutableLineStyle()
+        graphStyle.lineWidth = 2
+        graphStyle.lineColor = CPTColor.blue()
         
         let line : CPTScatterPlot = CPTScatterPlot()
         line.dataSource = self
+        line.dataLineStyle = graphStyle
         graph.add(line)
-        // @todo: раскурить про self
+        
+        
+        
         self.graphView.hostedGraph = graph
         
     }
