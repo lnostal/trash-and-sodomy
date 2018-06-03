@@ -9,61 +9,44 @@
 import Cocoa
 import CorePlot
 
-/*func CheckPoint(x: Double) -> Bool{
-    var y : Double = asin(x) + x*x
+func CheckPoint(x: Double) -> Bool{
+    let y : Double = asin(x) + x*x
     
-    y = sqrt(1-x*x)
-    
-    if y <=
-    
-    return
-}*/
+    let firstQuarter    = y <= sqrt(1 - x * x) && x >= -1 && x <= 0 && y >= 0 && y <= 1
+    let secondQuarter   = y >= -sqrt(1 - x * x) && x >= -1 && x <= 0 && y <= 0 && y >= -1
+    let thirdQuarter    = y <= -x + 1 && x <= 1 && x >= 0 && y >= 0 && y <= 1
+    let fourthQuarter   = y >= x - 1 && x <= 1 && x >= 0 && y <= 0 && y >= -1
+
+    return firstQuarter || secondQuarter || thirdQuarter || fourthQuarter
+}
 
 
-// здесь типа точки, по которым будет строиться график
-func GenerateDataSamples() -> [Int : (Double, Double)] {
+// точки, по котором строится график рассматриваемой области
+func GenerateDataSamples() -> [(Double, Double)] {
+    var samples = [(Double, Double)]()
 
-    var samples = [Int : (Double, Double)]()
-    
-    /*samples[0] = (-1.0, 0.0)
-    samples[1] = (0.0, 1.0)
-    samples[2] = (1.0, 0.0)
-    samples[3] = (0.0, -1.0)
-    samples[4] = (-1.0, 0.0)*/
-    
     let delta = (1 - (-1))/(999.0 - 1)
-    
-    samples[0] = (-1.0, 0.0)
-    
-    for step in 1...999 {
-        // это шаг
-        //let x = Double(step)
+
+    for step in 0...999 {
         let x : Double = -1 + delta * Double(step)
-        // это, собстна, сам график
-        let y = sqrt(1-x*x)
-        //let y : Double = asin(x) + x*x
-        // это коллекция координат (х, у)
-        
-        samples[step] = (x, y)
+        let y = sqrt(1 - x * x)
+        if x <= 0 {
+            samples.append((x, y))
+        }
     }
     
-    for step in 1...999 {
-        // это шаг
-        //let x = Double(step)
-        let x : Double = -1 + delta * Double(step)
-        // это, собстна, сам график
-        let y = sqrt(1-x*x)
-        //let y : Double = asin(x) + x*x
-        // это коллекция координат (х, у)
-        
-        samples[step+999] = (x, -y)
-    }
+    samples.append((1, 0))
     
-    samples[samples.count] = (-1.0, -0.0)
+    for step in 0...999 {
+        let x : Double = 1 - delta * Double(step)
+        let y = sqrt(1 - x * x)
+        if x <= 0 {
+            samples.append((x, -y))
+        }
+    }
     
     return samples
 }
-
 
 class ViewController: NSViewController {
     
@@ -117,10 +100,7 @@ class ViewController: NSViewController {
         line.dataLineStyle = graphStyle
         graph.add(line)
         
-        
-        
         self.graphView.hostedGraph = graph
-        
     }
     
     
@@ -143,9 +123,9 @@ extension NSViewController: CPTPlotDataSource{
         let symbol = GenerateDataSamples()[Int(idx)];
         
         if fieldEnum == UInt(CPTScatterPlotField.X.rawValue) {
-            return symbol?.0
+            return symbol.0
         } else {
-            return symbol?.1
+            return symbol.1
         }
     }
 }
