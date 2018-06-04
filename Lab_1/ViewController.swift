@@ -9,6 +9,17 @@
 import Cocoa
 import CorePlot
 
+func ChangeLable(isCorrect: Bool, label: NSTextField){
+    if isCorrect {
+        label.textColor = NSColor.green
+        label.stringValue = "принадлежит"
+    } else {
+        label.textColor = NSColor.red
+        label.stringValue = "не принадлежит"
+    }
+}
+
+// проверка принадлежности точки к выделенной области
 func CheckPoint(x: Double) -> Bool{
     let y : Double = asin(x) + x*x
     
@@ -19,7 +30,6 @@ func CheckPoint(x: Double) -> Bool{
 
     return firstQuarter || secondQuarter || thirdQuarter || fourthQuarter
 }
-
 
 // точки, по котором строится график рассматриваемой области
 func GenerateDataSamples() -> [(Double, Double)] {
@@ -51,6 +61,8 @@ func GenerateDataSamples() -> [(Double, Double)] {
 class ViewController: NSViewController {
     
     @IBOutlet weak var graphView: CPTGraphHostingView!
+    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var lable: NSTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,10 +112,20 @@ class ViewController: NSViewController {
         line.dataLineStyle = graphStyle
         graph.add(line)
         
+        ChangeLable(isCorrect: false, label: lable)
+        
         self.graphView.hostedGraph = graph
     }
     
+override func controlTextDidChange(_ obj: Notification) {
+        let string = textField.stringValue
+        let x = Double(string)
+        if x != nil {
+            ChangeLable(isCorrect: CheckPoint(x: x!), label: lable)
+        }
+    }
     
+   
     // Do any additional setup after loading the view.
     
     override var representedObject: Any? {
