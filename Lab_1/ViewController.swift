@@ -9,9 +9,13 @@
 import Cocoa
 import CorePlot
 
-func ChangeLable(isCorrect: Bool, label: NSTextField){
-    if isCorrect {
-        label.textColor = NSColor.green
+// вывод результата в текстфилд
+func ChangeLabel(isCorrect: Bool?, label: NSTextField){
+    if isCorrect == nil {
+        label.textColor = NSColor.orange
+        label.stringValue = "ошибка ввода"
+    } else if isCorrect! {
+        label.textColor = NSColor.systemGreen
         label.stringValue = "принадлежит"
     } else {
         label.textColor = NSColor.red
@@ -20,8 +24,12 @@ func ChangeLable(isCorrect: Bool, label: NSTextField){
 }
 
 // проверка принадлежности точки к выделенной области
-func CheckPoint(x: Double) -> Bool{
-    let y : Double = asin(x) + x*x
+func CheckPoint(oX: Double?, oY: Double?) -> Bool?{
+    
+    guard oX != nil && oY != nil else { return nil }
+    
+    let x = oX!
+    let y = oY!
     
     let firstQuarter    = y <= sqrt(1 - x * x) && x >= -1 && x <= 0 && y >= 0 && y <= 1
     let secondQuarter   = y >= -sqrt(1 - x * x) && x >= -1 && x <= 0 && y <= 0 && y >= -1
@@ -58,11 +66,13 @@ func GenerateDataSamples() -> [(Double, Double)] {
     return samples
 }
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSTextFieldDelegate {
     
     @IBOutlet weak var graphView: CPTGraphHostingView!
-    @IBOutlet weak var textField: NSTextField!
-    @IBOutlet weak var lable: NSTextField!
+    @IBOutlet weak var textFieldX: NSTextField!
+    @IBOutlet weak var textFieldY: NSTextField!
+    @IBOutlet weak var label: NSTextField!
+    @IBOutlet weak var button: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,20 +122,19 @@ class ViewController: NSViewController {
         line.dataLineStyle = graphStyle
         graph.add(line)
         
-        ChangeLable(isCorrect: false, label: lable)
-        
         self.graphView.hostedGraph = graph
     }
-    
-override func controlTextDidChange(_ obj: Notification) {
-        let string = textField.stringValue
-        let x = Double(string)
-        if x != nil {
-            ChangeLable(isCorrect: CheckPoint(x: x!), label: lable)
-        }
+
+    // обработка нажатия кнопки
+    @IBAction func buttonTapped(button: NSButton){
+        let stringX = textFieldX.stringValue
+        let x = Double(stringX)
+        let stringY = textFieldY.stringValue
+        let y = Double(stringY)
+        
+        ChangeLabel(isCorrect: CheckPoint(oX: x, oY: y), label: label)
     }
     
-   
     // Do any additional setup after loading the view.
     
     override var representedObject: Any? {
