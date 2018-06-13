@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D0370A02072C7B6005DBEB5 /* CorePlot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0370902072C79E005DBEB5 /* CorePlot.framework */; };
+		0D295F5720D064C4002ADF7F /* MainGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D295F5620D064C4002ADF7F /* MainGraph.swift */; };
 		0D2B7A86206F02DD00A9809D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B7A85206F02DD00A9809D /* AppDelegate.swift */; };
 		0D2B7A88206F02DD00A9809D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B7A87206F02DD00A9809D /* ViewController.swift */; };
 		0D2B7A8A206F02DD00A9809D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D2B7A89206F02DD00A9809D /* Assets.xcassets */; };
@@ -91,6 +92,7 @@
 
 /* Begin PBXFileReference section */
 		0D03707F2072C79E005DBEB5 /* CorePlot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CorePlot.xcodeproj; path = "core-plot-release-2.3/framework/CorePlot.xcodeproj"; sourceTree = "<group>"; };
+		0D295F5620D064C4002ADF7F /* MainGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGraph.swift; sourceTree = "<group>"; };
 		0D2B7A82206F02DD00A9809D /* Lab_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lab_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D2B7A85206F02DD00A9809D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D2B7A87206F02DD00A9809D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				0D2B7A87206F02DD00A9809D /* ViewController.swift */,
 				0D2B7A89206F02DD00A9809D /* Assets.xcassets */,
 				0D2B7A8B206F02DD00A9809D /* Main.storyboard */,
+				0D295F5620D064C4002ADF7F /* MainGraph.swift */,
 				0D2B7A8E206F02DD00A9809D /* Info.plist */,
 				0D2B7A8F206F02DD00A9809D /* Lab_1.entitlements */,
 			);
@@ -407,6 +410,7 @@
 			files = (
 				0D2B7A88206F02DD00A9809D /* ViewController.swift in Sources */,
 				0D2B7A86206F02DD00A9809D /* AppDelegate.swift in Sources */,
+				0D295F5720D064C4002ADF7F /* MainGraph.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
