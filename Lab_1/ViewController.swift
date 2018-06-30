@@ -58,9 +58,8 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.graphView.hostedGraph = CreateGraph(controller: self)
         
+        self.graphView.hostedGraph = CreateGraph(controller: self)
     }
 
     // обработка нажатия кнопки
